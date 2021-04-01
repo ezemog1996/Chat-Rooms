@@ -1,0 +1,11 @@
+.navlink {
+    float: right;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    border-radius: 5px;
+}
+
+.navlink:hover {
+    background-color: lightskyblue;
+}

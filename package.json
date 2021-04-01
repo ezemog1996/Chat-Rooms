@@ -1,0 +1,43 @@
+{
+  "name": "Galindo-Gomez-Chat-Rooms",
+  "version": "1.0.0",
+  "description": "Chat app for Enrique and his relatives",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezemog1996/Galindo-Gomez-Chat-Rooms.git"
+  },
+  "keywords": [],
+  "author": "Enrique Gomez",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.4"
+  },
+  "bugs": {
+    "url": "https://github.com/ezemog1996/Galindo-Gomez-Chat-Rooms/issues"
+  },
+  "homepage": "https://github.com/ezemog1996/Galindo-Gomez-Chat-Rooms#readme",
+  "dependencies": {
+    "aws-sdk": "^2.868.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.2",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "uuid": "^8.3.2"
+  }
+}
