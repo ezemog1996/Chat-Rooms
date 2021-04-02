@@ -1,0 +1,30 @@
+.options-container {
+    width: 100px;
+    height: 100vh;
+    margin-bottom: 0;
+    float: left;
+    background-color: black;
+    color: white;
+}
+
+.option {
+    height: 90px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center
+}
+
+.image-option {
+    border-radius: 50%;
+    margin: 10px;
+    height: 75px;
+    width: 75px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center
+}
+
+.option:hover {
+    background-color: grey;
+}

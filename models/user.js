@@ -16,7 +16,8 @@ const userSchema = new Schema(
         },
         profilePic: {
             type: String,
-            trim: true
+            trim: true,
+            default: "https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png"
         },
         chats: [{
             type: String

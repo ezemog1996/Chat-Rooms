@@ -12,6 +12,9 @@ router.route('/login')
 router.route('/finduser')
     .get(authenticate, userController.findUser);
 
+// router.route('/authorize')
+//     .get(userController.isAuthorized);
+
 router.route('/chatroom')
     .post(authenticate, userController.createRoom);
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default {
+const API = {
     register: data => {
         return axios.post("/api/users/register", data, {
             headers: {
@@ -10,5 +10,13 @@ export default {
     },
     login: data => {
         return axios.post("/api/users/login", data)
+    },
+    findUser: () => {
+        return axios.get("/api/users/finduser")
+    },
+    isAuthorized: () => {
+        return axios.get("/api/users/authorize")
     }
 }
+
+export default API;

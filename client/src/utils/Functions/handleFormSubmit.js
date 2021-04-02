@@ -1,4 +1,4 @@
-import API from '../API/API';
+import API from '../API';
 import FormData from 'form-data';
 
 const handleFormSubmit = (state, req) => {
@@ -10,9 +10,7 @@ const handleFormSubmit = (state, req) => {
         data.append(item, state[item])
     });
 
-    API[req](data)
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+    return API[req](data);
 }
 
 export default handleFormSubmit;
