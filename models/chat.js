@@ -7,18 +7,9 @@ const chatSchema = new Schema(
             type: String
         },
         participants: [{
-            type: String,
-        }],
-        messages: [{
-            sender: {
-                type: String
-            },
-            message: {
-                type: String
-            },
-            sentOn: {
-                type: Date,
-                default: Date.now()
+            username: {
+                type: String,
+                required: true
             }
         }]
     },

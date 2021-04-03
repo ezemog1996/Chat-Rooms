@@ -1,56 +1,57 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../utils/UserContext';
 import './style.css';
+import Profile from '../Profile/Profile';
+import Conversations from '../Conversations/Conversations';
+import Friends from '../Friends/Friends';
 
 function Sidebar() {
+    const choices = {
+        profile: Profile,
+        conversations: Conversations,
+        friends: Friends
+    }
 
     const { username, profilePic, chats, changeUser } = useContext(UserContext);
-    const [chosenOption, setChosenOption] = useState(() => {})
+    const [chosen, setChosen] = useState();
 
     useEffect(() => {
-        setChosenOption(options.profile);
+        setChosen(choices.conversations)
     }, [])
 
-    const options = {
-        'profile': () => {
-            return (
-                <div>
-                    profile
-                </div>
-            )
-        },
-        'conversations': () => {
-            return (
-                <div>
-                    conversations
-                </div>
-            )
-        },
-        'friends': () => {
-            return (
-                <div>
-                    friends
-                </div>
-            )
-        }
+    const changeChosen = e => {
+        const { name } = e.target;
+
+        setChosen(choices[name])
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.style.backgroundColor = 'cornflowerblue';
+        })
+
+        document.getElementsByName(name).forEach(item => {
+            item.style.backgroundColor = 'lightgrey';
+        })
     }
 
     return (
-        <nav>
-            <div className="options-container">
-                <div className="option">
-                    <div className="image-option" >
-                        <img src={profilePic} style={{height: '100%'}} alt="preview of profile" />
+        <div>
+            <nav className="options-container">
+                <button className="option tab" name="profile" onClick={changeChosen}>
+                    <div className="image-option tab" >
+                        <img src={profilePic} name="profile" style={{height: '100%'}} alt="preview of profile" />
                     </div>
-                </div>
-                <div className="option">
-                        Conversations
-                </div>
+                </button>
+                <button className="option tab" name="conversations" onClick={changeChosen} style={{backgroundColor: "lightgrey"}}>
+                    <a className="fas fa-comment-dots fa-4x tab" name="conversations"></a>
+                </button>
+                <button className="option tab" name="friends" onClick={changeChosen}>
+                    <a className="fas fa-users fa-4x tab" name="friends"></a>
+                </button>
+            </nav>
+            <div>
+                {chosen}
             </div>
-            <div className="chosen-container">
-                {chosenOption}
-            </div>
-        </nav>
+        </div>
     )
 }
 

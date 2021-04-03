@@ -3,8 +3,7 @@
     height: 100vh;
     margin-bottom: 0;
     float: left;
-    background-color: black;
-    color: white;
+    background-color: cornflowerblue;
 }
 
 .option {
@@ -12,11 +11,17 @@
     width: 100%;
     margin: auto;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
+    background-color: cornflowerblue;
+    color: black;
+    border: none;
+    padding: 0;
 }
 
 .image-option {
     border-radius: 50%;
+    border: 3px solid black;
     margin: 10px;
     height: 75px;
     width: 75px;
@@ -26,5 +31,9 @@
 }
 
 .option:hover {
-    background-color: grey;
+    background-color: lightgrey;
+}
+
+.option:focus {
+    outline: none;
 }

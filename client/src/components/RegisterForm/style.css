@@ -2,7 +2,7 @@
     margin: auto;
     margin-top: 20px;
     width: 200px;
-    background-color: lightblue;
+    background-color: cornflowerblue;
     padding: 20px;
     border-radius: 10px;
     overflow: auto;
@@ -31,13 +31,12 @@
 .custom-file-input::before {
     content: 'Upload a profile picture';
     display: inline-block;
-    border: 1px solid #999;
+    border: 1px solid black;
     border-radius: 3px;
     padding: 5px 8px;
     outline: none;
     white-space: nowrap;
     cursor: pointer;
-    text-shadow: 1px 1px #fff;
     font-weight: 700;
     font-size: 10pt;
 }
