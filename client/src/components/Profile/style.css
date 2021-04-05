@@ -1,5 +1,6 @@
 .chosen-container {
     background-color: lightgrey;
+    float: left;
     height: 100vh;
-    width: 300px;
+    width: 200px;
 }

@@ -20,6 +20,10 @@ const userSchema = new Schema(
             default: "https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png"
         },
         chats: [{
+            _id: {
+                type: String,
+                required: true
+            },
             roomName: {
                 type: String
             },

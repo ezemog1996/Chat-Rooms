@@ -1,0 +1,14 @@
+.friend-action-btn {
+    border: 1px solid black;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.friend-action-btn:focus {
+    background-color: grey;
+}
+
+.add-friend {
+    background-color: cornflowerblue;
+}

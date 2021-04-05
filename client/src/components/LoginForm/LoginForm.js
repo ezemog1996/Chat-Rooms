@@ -2,12 +2,10 @@ import React, { useState, useContext } from 'react'
 import './style.css';
 import handleInputChangeState from '../../utils/Functions/handleInputChangeState';
 import handleFormSubmit from '../../utils/Functions/handleFormSubmit';
-import { useHistory } from 'react-router-dom';
 import readyToSubmit from '../../utils/Functions/readyToSubmit';
 import UserContext from '../../utils/UserContext';
 
 function LoginForm() {
-    const routerHistory = useHistory();
     const { changeUser } = useContext(UserContext);
     const [userInfo, setUserInfo] = useState({});
     const [loginMessage, setLoginMessage] = useState('');
@@ -50,8 +48,8 @@ function LoginForm() {
                     if (res.data.message === "You've been successfully logged in!") {
                         document.querySelectorAll('input').forEach(input => input.value = '');
                         setLoginMessageColor('green')
-                        changeUser(res.data.username, res.data.profilePic, res.data.chats);
-                        routerHistory.push('/dashboard')
+                        changeUser(res.data.username, res.data.profilePic, res.data.chats, res.data.friends);
+                        window.location.replace('/dashboard');
                     } else {
                         setLoginMessageColor('red')
                     }

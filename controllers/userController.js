@@ -35,20 +35,68 @@ module.exports = {
             })
             .catch(err => res.status(422).json(err));
     },
+    logout: function(req, res) {
+        res.cookie('token', '', { expires: new Date(0) }).send(`${req.user.username} has been successfully logged out!`)
+    },
     findUser: function(req, res) {
         res.json({
             username: req.user.username,
             profilePic: req.user.profilePic,
             chats: req.user.chats,
+            friends: req.user.friends,
             message: "You're signed in"
         })
     },
     createRoom: function(req, res) {
         db.Chat.create(req.body)
             .then(room => res.json(room))
-            .catch(err => {
-                console.log(err)
-                res.status(422).json(err)
-            });
+            .catch(err => res.status(422).json(err));
+    },
+    findFriends: function(req, res) {
+        db.User.find(
+            {
+                username: {
+                    "$regex": `${req.params.username}`,
+                    "$options": "i"
+                },
+                _id: {
+                    $ne: req.user._id
+                }
+            },
+            {
+                password: 0,
+                chats: 0
+            }
+        )
+            .then(users => res.json(users))
+            .catch(err => res.status(422).json(err))
+    },
+    addFriend: function(req, res) {
+        db.User.findOne(
+            {
+                _id: req.user._id,
+            }
+        )
+        .then(user => {
+            db.User.findOneAndUpdate(
+                {
+                    _id: user.id
+                },
+                {
+                    $push: {
+                        friends: {
+                            username: req.body.username,
+                            _id: req.body._id
+                        }
+                    }
+                },
+                {
+                    new: true,
+                    useFindAndModify: false
+                }
+            )
+            .then(updatedUser => res.send(`You add ${req.body.username} as a friend!`))
+            .catch(err => console.log(err))
+        })
     }
 }

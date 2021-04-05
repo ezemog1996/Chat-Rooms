@@ -8,7 +8,7 @@ function Login() {
 
     useEffect(() => {
         checkAuthorization(false, routerHistory);
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <LoginForm />

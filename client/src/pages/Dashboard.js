@@ -5,7 +5,7 @@ import UserContext from '../utils/UserContext';
 import Sidebar from '../components/Sidebar/Sidebar';
 
 function Dashboard() {
-    const { username, profilePic, chats} = useContext(UserContext);
+    const { username, profilePic, chats, friends} = useContext(UserContext);
     const routerHistory = useHistory();
 
     useEffect(() => {

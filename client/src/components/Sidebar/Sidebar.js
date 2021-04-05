@@ -7,17 +7,23 @@ import Friends from '../Friends/Friends';
 
 function Sidebar() {
     const choices = {
-        profile: Profile,
-        conversations: Conversations,
-        friends: Friends
+        profile: () => {
+            return <Profile  username={username} profilePic={profilePic} changeUser={changeUser} />
+        },
+        conversations: () => {
+            return <Conversations chats={chats} />
+        },
+        friends: () => {
+            return <Friends friends={friends} />
+        }
     }
 
-    const { username, profilePic, chats, changeUser } = useContext(UserContext);
+    const { username, profilePic, chats, friends, changeUser } = useContext(UserContext);
     const [chosen, setChosen] = useState();
 
     useEffect(() => {
         setChosen(choices.conversations)
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const changeChosen = e => {
         const { name } = e.target;
@@ -48,9 +54,7 @@ function Sidebar() {
                     <a className="fas fa-users fa-4x tab" name="friends"></a>
                 </button>
             </nav>
-            <div>
-                {chosen}
-            </div>
+            {chosen}
         </div>
     )
 }

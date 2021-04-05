@@ -2,12 +2,10 @@ import React, {  useState } from 'react';
 import './style.css';
 import handleInputChangeState from '../../utils/Functions/handleInputChangeState';
 import handleFormSubmit from '../../utils/Functions/handleFormSubmit';
-import { useHistory } from 'react-router-dom';
 import readyToSubmit from '../../utils/Functions/readyToSubmit';
 
 
 function RegisterForm() {
-    const routerHistory = useHistory();
     const [userInfo, setUserInfo] = useState({});
     const [profilePic, setProfilePic] = useState("https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png");
     const [registerMessage, setRegisterMessage] = useState('');
@@ -71,7 +69,7 @@ function RegisterForm() {
                     if (res.data === "You successfully created your account!") {
                         document.querySelectorAll('input').forEach(input => input.value = '');
                         setRegisterMessageColor('green')
-                        routerHistory.push('/dashboard')
+                        window.location.replace('/login')
                     } else {
                         setRegisterMessageColor('red')
                     }

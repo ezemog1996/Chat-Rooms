@@ -13,8 +13,9 @@ function App() {
     username: '',
     profilePic: '',
     chats: [],
-    changeUser: (username, profilePic, chats) => {
-      setUser({...user, username, profilePic, chats})
+    friends: [],
+    changeUser: (username, profilePic, chats, friends) => {
+      setUser({...user, username, profilePic, chats, friends})
     }
   });
 
@@ -25,7 +26,8 @@ function App() {
             ...user,
             username: res.data.username,
             profilePic: res.data.profilePic,
-            chats: res.data.chats
+            chats: res.data.chats,
+            friends: res.data.friends
           })
       })
       .catch(err => console.log(err))
