@@ -8,7 +8,7 @@ function Profile({ profilePic, username, changeUser }) {
         e.preventDefault();
         API.logout()
             .then(res => {
-                changeUser('', '', [], []);
+                changeUser('', '', '', [], []);
                 window.location.replace('/');
             });
     }

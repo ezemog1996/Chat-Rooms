@@ -28,8 +28,11 @@ module.exports = {
 
                         res.cookie('token', jwtToken, { httpOnly: true, secure: true, sameSite: "Strict" }).json({
                             message: "You've been successfully logged in!",
+                            _id: user._id,
                             username: user.username,
-                            profilePic: user.profilePic
+                            profilePic: user.profilePic,
+                            chats: user.chats,
+                            friends: user.friends
                         });
                     })
             })
@@ -40,6 +43,7 @@ module.exports = {
     },
     findUser: function(req, res) {
         res.json({
+            _id: req.user._id,
             username: req.user.username,
             profilePic: req.user.profilePic,
             chats: req.user.chats,
@@ -48,7 +52,11 @@ module.exports = {
         })
     },
     createRoom: function(req, res) {
-        db.Chat.create(req.body)
+        console.log(JSON.parse(req.body.participants));
+        db.Chat.create({
+            roomName: req.body.roomName,
+            participants: [...req.body.participants]
+        })
             .then(room => res.json(room))
             .catch(err => res.status(422).json(err));
     },

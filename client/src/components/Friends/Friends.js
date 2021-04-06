@@ -10,7 +10,7 @@ function Friends({ friends }) {
         yourFriends: {
             placeholder: 'Search your friends list',
             method: search => {
-                friends.filter(friend => friend.username.includes(search))
+                setSearchResults(friends.filter(friend => friend.username.includes(search)))
             }
         },
         findFriends: {
@@ -40,6 +40,7 @@ function Friends({ friends }) {
 
     useEffect(() => {
         if (search.username) searchMethod.method(debouncedSearch);
+        else setSearchResults([]);
     }, [debouncedSearch])
 
     const switchAction = e => {
@@ -68,11 +69,11 @@ function Friends({ friends }) {
                 <div style={{paddingRight: '5px', paddingLeft: '5px', backgroundColor: 'grey'}}>
                     <button name='findFriends' className='friend-btn add-friend-btn' onClick={switchAction}>Add Friend</button>
                     <button name='yourFriends' className='friend-btn your-friends-btn' onClick={switchAction}>Your Friends</button>
-                    <input onChange={handleInputChange} name='username' className='search-friend' placeholder={searchMethod.placeholder} />
+                    <input onChange={handleInputChange} autoComplete="off" name='username' className='search-friend' placeholder={searchMethod.placeholder} />
                 </div>
             </div>
             <div>
-                <FriendDiv friends={searchResults} />
+                <FriendDiv method={searchMethod} friends={searchResults} />
             </div>
         </div>
     )

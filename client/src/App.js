@@ -10,12 +10,13 @@ import UserContext from './utils/UserContext';
 
 function App() {
   const [user, setUser] = useState({
+    _id: '',
     username: '',
     profilePic: '',
     chats: [],
     friends: [],
-    changeUser: (username, profilePic, chats, friends) => {
-      setUser({...user, username, profilePic, chats, friends})
+    changeUser: (_id, username, profilePic, chats, friends) => {
+      setUser({...user, _id, username, profilePic, chats, friends})
     }
   });
 
@@ -24,6 +25,7 @@ function App() {
       .then(res => {
           setUser({
             ...user,
+            _id: res.data._id,
             username: res.data.username,
             profilePic: res.data.profilePic,
             chats: res.data.chats,

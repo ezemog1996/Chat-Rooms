@@ -32,6 +32,6 @@ mongoose.connect(
     })
 })
 
-io.sockets.on('connection', socket => {
+io.on('connection', socket => {
     console.log(`Connected socket: ${socket}`);
 })

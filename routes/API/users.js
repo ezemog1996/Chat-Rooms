@@ -17,10 +17,10 @@ router.route('/finduser')
 router.route('/findfriends/:username')
     .get(authenticate, userController.findFriends);
 
-router.route('/addFriend')
+router.route('/addfriend')
     .post(authenticate, upload.single(''), userController.addFriend);
 
 router.route('/chatroom')
-    .post(authenticate, userController.createRoom);
+    .post(authenticate, upload.single(''), userController.createRoom);
 
 module.exports = router;
