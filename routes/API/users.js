@@ -7,7 +7,7 @@ router.route('/register')
     .post(upload.single('profilePic'), userController.register);
 
 router.route('/login')
-    .post(upload.single('profilePic'), userController.login);
+    .post(userController.login);
 
 router.route('/logout')
     .get(authenticate, userController.logout);
@@ -17,10 +17,15 @@ router.route('/finduser')
 router.route('/findfriends/:username')
     .get(authenticate, userController.findFriends);
 
-router.route('/addfriend')
-    .post(authenticate, upload.single(''), userController.addFriend);
+router.route('/friends')
+    .post(authenticate, userController.addFriend);
 
 router.route('/chatroom')
-    .post(authenticate, upload.single(''), userController.createRoom);
+    .post(authenticate, userController.createRoom);
+
+router.route('/messages')
+    .post(authenticate, userController.sendMessage)
+
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React, {  useState } from 'react';
 import './style.css';
 import handleInputChangeState from '../../utils/Functions/handleInputChangeState';
-import handleFormSubmit from '../../utils/Functions/handleFormSubmit';
+import handleSubmitWithFile from '../../utils/Functions/handleFormSubmit';
 import readyToSubmit from '../../utils/Functions/readyToSubmit';
 
 
@@ -58,7 +58,7 @@ function RegisterForm() {
         const readyToRegister = readyToSubmit(textInputs, textInputLabels, setMissingFieldsMessage);
 
         if (readyToRegister) {
-            handleFormSubmit(userInfo, 'register')
+            handleSubmitWithFile(userInfo, 'register')
                 .then(res => {
                     console.log(res.data)
                     setProfilePic("https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png");

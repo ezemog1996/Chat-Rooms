@@ -34,4 +34,12 @@ mongoose.connect(
 
 io.on('connection', socket => {
     console.log(`Connected socket: ${socket}`);
+
+    socket.on('message', message => {
+        io.emit('message', message);
+    })
+    
+    socket.on('disconnect', () => {
+        console.log('disconnected')
+    })
 })

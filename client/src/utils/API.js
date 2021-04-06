@@ -2,11 +2,7 @@ import axios from "axios";
 
 const API = {
     register: data => {
-        return axios.post("/api/users/register", data, {
-            headers: {
-                'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-            }
-        })
+        return axios.post("/api/users/register", data)
     },
     login: data => {
         return axios.post("/api/users/login", data)
@@ -24,18 +20,13 @@ const API = {
         return axios.get(`/api/users/findfriends/${query}`)
     },
     addFriend: userInfo => {
-        return axios.post(`/api/users/addfriend`, userInfo, {
-            headers: {
-                'Content-Type': `multipart/form-data; boundary=${userInfo._boundary}`
-            }
-        })
+        return axios.post(`/api/users/friends`, userInfo)
     },
     createChat: chatInfo => {
-        return axios.post('/api/users/chatroom', chatInfo, {
-            headers: {
-                'Content-Type': `multipart/form-data; boundary=${chatInfo._boundary}`
-            }
-        })
+        return axios.post('/api/users/chatroom', chatInfo)
+    },
+    sendMessage: message => {
+        return axios.post('/api/users/messages', message)
     }
 }
 

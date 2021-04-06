@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 module.exports = {
     register: async function(req, res) {
+        console.log(req.body)
         const profilePic = await req.file ? `${req.file.location}` : "https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png";
         db.User.findOne({ username: req.body.username })
             .then(user => {
@@ -52,12 +53,31 @@ module.exports = {
         })
     },
     createRoom: function(req, res) {
-        console.log(JSON.parse(req.body.participants));
+        console.log(req.body);
         db.Chat.create({
             roomName: req.body.roomName,
-            participants: [...req.body.participants]
+            participants: req.body.participants
         })
-            .then(room => res.json(room))
+            .then(room => {
+                db.User.findOneAndUpdate(
+                    {
+                        _id: req.user._id
+                    },
+                    {
+                        $push: {
+                            chats: {
+                                _id: room._id,
+                                roomName: room.roomName,
+                                members: room.members
+                            }
+                        }
+                    },
+                    {
+                        new: true,
+                        useFindAndModify: false
+                    }
+                ).then(user => res.json(room))
+            })
             .catch(err => res.status(422).json(err));
     },
     findFriends: function(req, res) {
@@ -104,7 +124,12 @@ module.exports = {
                 }
             )
             .then(updatedUser => res.send(`You add ${req.body.username} as a friend!`))
-            .catch(err => console.log(err))
+            .catch(err => res.status(422).json(err))
         })
+    },
+    sendMessage: function(req, res) {
+        db.Message.create(req.body)
+            .then(message => res.json(message))
+            .catch(err => res.status(422).json(err))
     }
 }
