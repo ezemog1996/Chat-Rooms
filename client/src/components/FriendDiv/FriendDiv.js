@@ -6,7 +6,7 @@ import ChatContext from '../../utils/ChatContext';
 
 function FriendDiv({ friends }) {
     const user = useContext(UserContext);
-    const { changeChat } = useContext(ChatContext);
+    const { chat, setChat } = useContext(ChatContext);
 
     const addFriend = e => {
         e.preventDefault();
@@ -29,16 +29,19 @@ function FriendDiv({ friends }) {
 
     const handleSendMessageClick = e => {
         e.preventDefault();
-        changeChat('', '', [], [
-            {
-                _id: user._id,
-                username: user.username
-            },
-            {
-                _id: e.target.getAttribute('data-id'),
-                username: e.target.parentNode.textContent.split(' ')[0]
-            }
-        ]);
+        setChat({
+            ...chat,
+            participants:  [
+                {
+                    _id: user._id,
+                    username: user.username
+                },
+                {
+                    _id: e.target.getAttribute('data-id'),
+                    username: e.target.parentNode.textContent.split(' ')[0]
+                }
+            ]
+        });
     }
     return (
         friends.length ?

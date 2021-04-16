@@ -48,7 +48,7 @@ function LoginForm() {
                     if (res.data.message === "You've been successfully logged in!") {
                         document.querySelectorAll('input').forEach(input => input.value = '');
                         setLoginMessageColor('green')
-                        changeUser(res.data.username, res.data.profilePic, res.data.chats, res.data.friends);
+                        changeUser(res.data._id, res.data.username, res.data.profilePic, res.data.chats, res.data.friends);
                         window.location.replace('/dashboard');
                     } else {
                         setLoginMessageColor('red')

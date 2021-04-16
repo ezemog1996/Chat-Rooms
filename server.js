@@ -5,6 +5,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const mongoose = require("mongoose");
+const { Message } = require('./models');
 const routes = require("./routes");
 
 const PORT = process.env.PORT || 3001;
@@ -33,10 +34,15 @@ mongoose.connect(
 })
 
 io.on('connection', socket => {
-    console.log(`Connected socket: ${socket}`);
+    // console.log(`Connected socket: ${socket}`);
+    const id = socket.handshake.query.id;
+    socket.join(id);
 
     socket.on('message', message => {
-        io.emit('message', message);
+        message.participants.forEach(participant => {
+            console.log(message)
+            socket.broadcast.to(participant._id).emit('message', message.message)
+        })
     })
     
     socket.on('disconnect', () => {

@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 module.exports = {
     register: async function(req, res) {
-        console.log(req.body)
         const profilePic = await req.file ? `${req.file.location}` : "https://racemph.com/wp-content/uploads/2016/09/profile-image-placeholder.png";
         db.User.findOne({ username: req.body.username })
             .then(user => {
@@ -53,7 +52,6 @@ module.exports = {
         })
     },
     createRoom: function(req, res) {
-        console.log(req.body);
         db.Chat.create({
             roomName: req.body.roomName,
             participants: req.body.participants

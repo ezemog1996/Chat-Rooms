@@ -1,7 +1,7 @@
 import React, {  useState } from 'react';
 import './style.css';
 import handleInputChangeState from '../../utils/Functions/handleInputChangeState';
-import handleSubmitWithFile from '../../utils/Functions/handleFormSubmit';
+import handleSubmitWithFile from '../../utils/Functions/handleSubmitWithFile';
 import readyToSubmit from '../../utils/Functions/readyToSubmit';
 
 

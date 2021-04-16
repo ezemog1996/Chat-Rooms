@@ -36,3 +36,7 @@
 .option:focus {
     outline: none;
 }
+
+.text-area {
+    width: 325px
+}
