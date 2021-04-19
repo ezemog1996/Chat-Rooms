@@ -57,6 +57,7 @@ module.exports = {
             participants: req.body.participants
         })
             .then(room => {
+                console.log(room.participants)
                 db.User.findOneAndUpdate(
                     {
                         _id: req.user._id
@@ -66,7 +67,7 @@ module.exports = {
                             chats: {
                                 _id: room._id,
                                 roomName: room.roomName,
-                                members: room.members
+                                members: room.participants
                             }
                         }
                     },
@@ -77,6 +78,29 @@ module.exports = {
                 ).then(user => res.json(room))
             })
             .catch(err => res.status(422).json(err));
+    },
+    addRoomToUser: function(req, res) {
+        console.log(req.body.members)
+        db.User.findOneAndUpdate(
+            {
+                _id: req.user._id
+            },
+            {
+                $push: {
+                    chats: {
+                        _id: req.body._id,
+                        roomName: req.body.roomName,
+                        members: req.body.members
+                    }
+                }
+            },
+            {
+                new: true,
+                useFindAndModify: false
+            }
+        )
+            .then(user => res.json(user))
+            .catch(err => res.status(422).json(err))
     },
     findFriends: function(req, res) {
         db.User.find(

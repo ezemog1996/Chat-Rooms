@@ -39,9 +39,9 @@ io.on('connection', socket => {
     socket.join(id);
 
     socket.on('message', message => {
-        message.participants.forEach(participant => {
-            console.log(message)
-            socket.broadcast.to(participant._id).emit('message', message.message)
+        const recipients = message.participants.filter(participant => message.message.sender._id !== participant._id);
+        recipients.forEach(recipient => {
+            socket.broadcast.to(recipient._id).emit('message', message)
         })
     })
     

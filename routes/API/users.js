@@ -21,7 +21,8 @@ router.route('/friends')
     .post(authenticate, userController.addFriend);
 
 router.route('/chatroom')
-    .post(authenticate, userController.createRoom);
+    .post(authenticate, userController.createRoom)
+    .put(authenticate, userController.addRoomToUser);
 
 router.route('/messages')
     .post(authenticate, userController.sendMessage)

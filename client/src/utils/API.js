@@ -25,6 +25,9 @@ const API = {
     createChat: chatInfo => {
         return axios.post('/api/users/chatroom', chatInfo)
     },
+    addRoomToUser: chatInfo => {
+        return axios.put('/api/users/chatroom', chatInfo)
+    },
     sendMessage: message => {
         return axios.post('/api/users/messages', message)
     }

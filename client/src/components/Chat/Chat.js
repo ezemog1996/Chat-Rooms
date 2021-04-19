@@ -1,23 +1,15 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import UserContext from '../../utils/UserContext';
 import ChatContext from '../../utils/ChatContext';
+import SocketContext from '../../utils/SocketContext';
 import handleFormSubmit from '../../utils/Functions/handleFormSubmit';
-import io from 'socket.io-client';
 
 function Chat() {
     const user = useContext(UserContext);
+    const socket = useContext(SocketContext);
     const { chat, setChat } = useContext(ChatContext);
-    const [socket, setSocket] = useState()
 
     const messageRef = useRef();
-
-    useEffect(() => {
-        const newSocket = io('localhost:3000', { query: { id: user._id } });
-        setSocket(newSocket);
-        newSocket.on('message', message => {
-            console.log(message);
-        })
-    }, [user])
 
     const sendMessage = e => {
         e.preventDefault();
@@ -25,29 +17,39 @@ function Chat() {
         if (messageRef.current.value.length) {
             if (!chat._id) {
                 handleFormSubmit(chat, 'createChat')
-                .then(res => {
-                    roomId = res.data._id;
-                    handleFormSubmit({
-                        roomId,
-                        sender: {
-                            username: user.username,
-                            _id: user._id
-                        },
-                        message: messageRef.current.value
-                    }, 'sendMessage')
-                        .then(response => {
-                            setChat({
-                                _id: res.data._id,
-                                roomName: res.data.roomName,
-                                messages: [...chat.messages, response.data],
-                                participants: res.data.participants
+                    .then(res => {
+                        roomId = res.data._id;
+                        handleFormSubmit({
+                            roomId,
+                            sender: {
+                                username: user.username,
+                                _id: user._id
+                            },
+                            message: messageRef.current.value
+                        }, 'sendMessage')
+                            .then(response => {
+                                setChat({
+                                    _id: res.data._id,
+                                    roomName: res.data.roomName,
+                                    messages: [...chat.messages, response.data],
+                                    participants: res.data.participants
+                                })
+
+                                socket.emit('message', {
+                                    participants: chat.participants,
+                                    roomName: res.data.roomName,
+                                    message: {
+                                        roomId,
+                                        sender: {
+                                            _id: user._id,
+                                            username: user.username
+                                        },
+                                        message: messageRef.current.value
+                                    }
+                                })
+
                             })
-
-                            const recipients = chat.participants.filter(participant => participant._id !== user._id);
-                            socket.emit('message', { participants: recipients, message: "I'm sending this message" })
-
-                        })
-                })
+                    })
             } else {
                 roomId = chat._id;
                 handleFormSubmit({
@@ -61,8 +63,18 @@ function Chat() {
                     .then(response => {
                         setChat({ ...chat, messages: [...chat.messages, response.data] })
 
-                        const recipients = chat.participants.filter(participant => participant._id !== user._id);
-                        socket.emit('message', { participants: recipients, message: "I'm sending another message" })
+                        socket.emit('message', {
+                            participants: chat.participants,
+                            roomName: chat.roomName,
+                            message: {
+                                roomId,
+                                sender: {
+                                    _id: user._id,
+                                    username: user.username
+                                },
+                                message: messageRef.current.value
+                            }
+                        })
                     })
             }
 
